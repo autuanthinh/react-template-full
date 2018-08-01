@@ -1,0 +1,37 @@
+{
+    "editor.fontSize": 13,
+    "files.autoSave": "off",
+    "window.zoomLevel": 0,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/.vscode": true,
+        "**/node_modules": true,
+        "**/build": true,
+        "**/.env": true
+    },
+    "editor.tabSize": 4,
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": false,
+    "[json]": {
+        "editor.formatOnSave": false
+    },
+    "[handlebars]": {
+        "editor.formatOnSave": false
+    },
+    "prettier.tabWidth": 4,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "prettier.singleQuote": true,
+    "prettier.printWidth": 120,
+    "prettier.trailingComma": "es5",
+    "html.format.wrapLineLength": 120,
+    "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+    "gitlens.advanced.messages": {
+        "suppressShowKeyBindingsNotice": true
+    },
+    "gitlens.historyExplorer.enabled": true
+}
