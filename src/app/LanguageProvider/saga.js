@@ -3,7 +3,7 @@ import CountryLanguage from 'country-language';
 import _ from 'lodash';
 
 import Utils from '../_utils/utils';
-import API from '../_services/api';
+import apiCROS from '../_services/apiCROS';
 
 import { GET_DEFAULT_LANGUAGE, DEFAULT_LANGUAGE } from './constants';
 import { setLanguage } from './actions';
@@ -11,11 +11,10 @@ import { setLanguage } from './actions';
 import { appLocales } from '../../i18n';
 
 const checkLocalLanguage = () => {
-    const restApi = new API();
     const path = 'http://ip-api.com/json';
 
-    return restApi
-        .fetchCrossDomain(path)
+    return apiCROS
+        .get(path)
         .then(res => {
             return res.data.countryCode.toLowerCase();
         })

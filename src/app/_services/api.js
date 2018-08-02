@@ -1,63 +1,52 @@
 import axios from 'axios';
+import _ from 'lodash';
+
 import { Config } from '../../config';
-import SessionStorageAdapter from '../_utils/sessionStorage';
 
-export default class API {
-    constructor() {
-        this.token = undefined;
-        this.headers = {};
+export class Api {
+    constructor(instance, getDefaultHeader) {
+        if (instance) {
+            this.instance = instance;
+            this.getDefaultHeader = getDefaultHeader;
+        } else {
+            this.instance = axios.create({
+                baseURL: Config.API_SERVER,
+            });
+        }
     }
 
-    setJwtToken(token) {
-        this.token = token;
-        this.establishHeaderRequest();
-    }
-
-    establishHeaderRequest() {
-        this.headers = {
-            'content-type': 'application/json',
-            'x-app-auth': `Bearer ${this.token}`,
-            'x-csrf-token': SessionStorageAdapter.getItem('csrfToken')
+    getDefaultOptions(isAuth = true) {
+        let auth = isAuth ? { Authorization: null } : {};
+        return {
+            headers: {
+                ...(typeof this.getDefaultHeade === 'function' ? this.getDefaultHeader() : {}),
+                ...auth,
+            },
         };
     }
 
-    fetch(url) {
-        axios.defaults.baseURL = Config.API_SERVER;
-        // axios.defaults.withCredentials = true;
-        return axios.get(url);
+    getDefaultHeader() {
+        return { 'content-type': 'application/json' };
     }
 
-    fetchCrossDomain(url) {
-        return axios.get(url);
+    fetch(url, options = {}) {
+        return this.get(url, options, false);
     }
 
-    get(url) {
-        if (!this.token) {
-            throw new Error('The API require token !!!');
-        }
-        axios.defaults.baseURL = Config.API_SERVER;
-        const options = { headers: this.headers };
-
-        return axios.get(url, options);
+    get(url, options = {}, isAuth = true) {
+        const finalOptions = _.merge(this.getDefaultOptions(isAuth), options);
+        return this.instance.get(url, finalOptions);
     }
 
-    put({ path = '', payload }) {
-        return axios({
-            baseURL: Config.API_SERVER,
-            data: payload,
-            method: 'PUT',
-            url: path,
-            headers: this.headers
-        });
+    put({ path = '', payload, options = {}, isAuth = true }) {
+        const finalOptions = _.merge(true, this.getDefaultOptions(isAuth), options);
+        return this.instance.put(path, payload, finalOptions);
     }
 
-    post({ path = '', payload }) {
-        return axios({
-            baseURL: Config.API_SERVER,
-            data: payload,
-            method: 'POST',
-            url: path,
-            headers: this.headers
-        });
+    post({ path = '', payload, options = {}, isAuth = true }) {
+        const finalOptions = _.merge(true, this.getDefaultOptions(isAuth), options);
+        return this.instance.post(path, payload, finalOptions);
     }
 }
+
+export default new Api();

@@ -1,14 +1,13 @@
 import { put, take, call, fork, select } from 'redux-saga/effects';
-import API from '../../_services/api';
+import api from '../../_services/api';
 import * as actionList from './actions';
 import * as nameActList from './consts';
 import { postsByRedditSelector } from './selectors';
 
 const fetchPostsApi = reddit => {
-    const restApi = new API();
     const path = `/r/${reddit}.json`;
 
-    return restApi
+    return api
         .fetch(path)
         .then(res => {
             return res.data.data.children.map(item => {
@@ -18,7 +17,7 @@ const fetchPostsApi = reddit => {
         .catch(err => {
             put({
                 type: 'ERROR',
-                err
+                err,
             });
             // console.log('err: ', err)
         });
@@ -33,7 +32,9 @@ function* fetchPosts() {
         let getPostsFromState = yield select(postsByRedditSelector);
         getPostsFromState = getPostsFromState.getIn([reddit, 'items']);
         console.log('getPostsFromState 11: ', getPostsFromState);
-        !isOnline && getPostsFromState ? (dataPosts = getPostsFromState) : (dataPosts = yield call(fetchPostsApi, reddit));
+        !isOnline && getPostsFromState
+            ? (dataPosts = getPostsFromState)
+            : (dataPosts = yield call(fetchPostsApi, reddit));
 
         yield put(actionList.receivePosts(reddit, dataPosts));
     }
@@ -50,7 +51,9 @@ function* invalidateReddit() {
         let getPostsFromState = yield select(postsByRedditSelector);
         getPostsFromState = getPostsFromState.getIn([reddit, 'items']);
         console.log('getPostsFromState 22: ', getPostsFromState);
-        !isOnline && getPostsFromState ? (dataPosts = getPostsFromState) : (dataPosts = yield call(fetchPostsApi, reddit));
+        !isOnline && getPostsFromState
+            ? (dataPosts = getPostsFromState)
+            : (dataPosts = yield call(fetchPostsApi, reddit));
 
         yield put(actionList.receivePosts(reddit, dataPosts));
     }
