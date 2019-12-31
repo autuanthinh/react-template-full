@@ -17,14 +17,14 @@ import registerServiceWorker from './registerServiceWorker';
 import store, { browserHistory } from './app/stores';
 
 // Multi Lang
-import LanguageProvider from './app/LanguageProvider';
+import LanguageProvider from './app/containers/LanguageProvider';
 import { translationMessages } from './i18n';
 
 // Custom
 import { muiDefault as muiTheme } from './material-ui-theme';
 
-// Add CSS
-import './styles/index.css';
+// Add SCSS
+import './styles/index.scss';
 
 import Routes from './app/routers';
 
@@ -41,4 +41,13 @@ ReactDOM.render(
     </div>,
     document.getElementById('root')
 );
-registerServiceWorker();
+
+if (process.env.REACT_APP_ENV === 'dev') {
+    registerServiceWorker();
+}
+
+if (process.env.NODE_ENV === 'development') {
+    import('app/_utils/debug').then(debug => {
+        debug.default(window);
+    });
+}

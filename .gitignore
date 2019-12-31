@@ -9,6 +9,9 @@
 # production
 /build
 
+# styleguide build folder
+/styleguide-build
+
 # misc
 .DS_Store
 .env.local
@@ -18,6 +21,12 @@
 
 npm-debug.log*
 npm-lock.json
+package-lock.json
 yarn-debug.log*
 yarn-error.log*
-yarn.lock
+
+/.vscode
+/src/styles/index.css
+
+#.idea
+/.idea

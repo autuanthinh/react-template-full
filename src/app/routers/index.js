@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { Router, Route, Switch } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
-import ScrollToTop from './scroll-to-top';
-import Header from '../containers/header';
-import Footer from '../containers/footer';
-import NotFound from '../components/NotFound';
+import Header from 'app/containers/header';
+import Footer from 'app/containers/footer';
+import NotFound from 'app/containers/NotFound';
 import RoutersUnAuthen from './RoutersUnAuthen';
 import RoutersAuthen from './RoutersAuthen';
+
+import ScrollToTop from './scroll-to-top';
 
 class Routers extends PureComponent {
     constructor(props) {

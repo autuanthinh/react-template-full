@@ -1,8 +1,8 @@
 import { fromJS } from 'immutable';
 import CountryLanguage from 'country-language';
-import localStorageAdapter from '../_utils/localStorage';
+import localStorageAdapter from 'app/_utils/localStorage';
 
-import { appLocales } from '../../i18n';
+import { appLocales } from '../../../i18n';
 
 import { SET_LANGUAGE, DEFAULT_LANGUAGE } from './constants';
 

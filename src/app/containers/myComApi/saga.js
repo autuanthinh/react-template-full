@@ -1,5 +1,5 @@
 import { put, take, call, fork, select } from 'redux-saga/effects';
-import api from '../../_services/api';
+import api from 'app/_utils/api';
 import * as actionList from './actions';
 import * as nameActList from './consts';
 import { postsByRedditSelector } from './selectors';

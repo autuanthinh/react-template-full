@@ -1,5 +1,5 @@
 import socketCluster from 'socketcluster-client';
-import { Config } from './../../config';
+import { Config } from '../../config';
 
 export default class BaseWebsocket {
     constructor() {
@@ -28,7 +28,7 @@ export default class BaseWebsocket {
     }
 
     watch(channel, callback) {
-        return channel.watch(callback);
+        return channel.watch.call(channel, callback);
     }
 
     unwatch(action, callback) {
@@ -37,7 +37,7 @@ export default class BaseWebsocket {
 
     // many sockets
     subscribeList(events, callback) {
-        for (let event of events) {
+        for (const event of events) {
             const chanel = this.socket.subscribe(event);
             this.watch(chanel, responses => {
                 callback(responses, event);
@@ -46,7 +46,7 @@ export default class BaseWebsocket {
     }
 
     unsubscribeList(events) {
-        for (let event of events) {
+        for (const event of events) {
             this.unsubscribe(event);
             this.unwatch(event);
         }

@@ -10,7 +10,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { IntlProvider } from 'react-intl';
-import localStorageAdapter from '../_utils/localStorage';
+import localStorageAdapter from 'app/_utils/localStorage';
 import { getDefaultLanguage } from './actions';
 
 class LanguageProvider extends React.PureComponent {
@@ -48,7 +48,4 @@ const mapDispatchToProps = {
     getDefaultLanguage,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(LanguageProvider);
+export default connect(mapStateToProps, mapDispatchToProps)(LanguageProvider);
